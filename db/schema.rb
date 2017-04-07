@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407191940) do
+ActiveRecord::Schema.define(version: 20170407201726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,11 +19,19 @@ ActiveRecord::Schema.define(version: 20170407191940) do
     t.string   "title"
     t.text     "content"
     t.integer  "user_id"
-    t.integer  "attachnment_id"
-    t.string   "attachnment_type"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
-    t.index ["attachnment_id", "attachnment_type"], name: "index_articles_on_attachnment_id_and_attachnment_type", using: :btree
+    t.integer  "attachment_id"
+    t.string   "attachment_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["attachment_id", "attachment_type"], name: "index_articles_on_attachment_id_and_attachment_type", using: :btree
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
