@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407201726) do
+ActiveRecord::Schema.define(version: 20170407203106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(version: 20170407201726) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.index ["attachment_id", "attachment_type"], name: "index_articles_on_attachment_id_and_attachment_type", using: :btree
+  end
+
+  create_table "attachment_files", force: :cascade do |t|
+    t.string   "source_file_name"
+    t.string   "source_content_type"
+    t.integer  "source_file_size"
+    t.datetime "source_updated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "comments", force: :cascade do |t|
