@@ -11,5 +11,5 @@
 // about supported directives.
 //
 //= require angular
-//= require angular_ujs
+// require angular_ujs
 //= require_tree .
