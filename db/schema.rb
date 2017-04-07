@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407174003) do
+ActiveRecord::Schema.define(version: 20170407191940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "attachnment_id"
+    t.string   "attachnment_type"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["attachnment_id", "attachnment_type"], name: "index_articles_on_attachnment_id_and_attachnment_type", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
