@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170407203106) do
+ActiveRecord::Schema.define(version: 20170408180948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,12 +18,13 @@ ActiveRecord::Schema.define(version: 20170407203106) do
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
-    t.integer  "user_id"
-    t.integer  "attachment_id"
-    t.string   "attachment_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.index ["attachment_id", "attachment_type"], name: "index_articles_on_attachment_id_and_attachment_type", using: :btree
+    t.integer  "user_id"
+    t.string   "attachment_type"
+    t.integer  "attachment_id"
+    t.index ["attachment_type", "attachment_id"], name: "index_articles_on_attachment_type_and_attachment_id", using: :btree
+    t.index ["user_id"], name: "index_articles_on_user_id", using: :btree
   end
 
   create_table "attachment_files", force: :cascade do |t|
@@ -37,10 +38,12 @@ ActiveRecord::Schema.define(version: 20170407203106) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "content"
-    t.integer  "user_id"
-    t.integer  "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "article_id"
+    t.index ["article_id"], name: "index_comments_on_article_id", using: :btree
+    t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,4 +63,7 @@ ActiveRecord::Schema.define(version: 20170407203106) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "articles", "users"
+  add_foreign_key "comments", "articles"
+  add_foreign_key "comments", "users"
 end
