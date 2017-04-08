@@ -11,5 +11,7 @@
 // about supported directives.
 //
 //= require angular
+//= require angular-ui-router
+//= require AngularDevise/lib/devise
 // require angular_ujs
 //= require_tree .
