@@ -12,6 +12,6 @@
 //
 //= require angular
 //= require angular-ui-router
-//= require AngularDevise/lib/devise
-// require angular_ujs
+//= require angular-rails-templates
 //= require_tree .
+//= require_tree ../templates
