@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'bower-rails'
 gem 'angular-rails-templates'
+gem 'angular_rails_csrf'
+gem 'responders'
 
 gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'

@@ -6,8 +6,10 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <base href="/">
   </head>
-  <body>
-    <%= yield %>
+  <body ng-app="nrTest">
+    <div ng-include="'nav/nav.html'"></div>
+    <ui-view></ui-view>
   </body>
 </html>

@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>The Home View!</h1>
+    <ul>
+        <li ng-repeat="article in articles">
+          {{article.title}} - {{article.content}} <b>by</b> {{article.user.email}}
+        </li>
+    </ul>
+    <a ng-hide="toShow || !signedIn()" ng-click="toggleShow()">Create Article</a>
+    <div ng-show="signedIn() && toShow">
+      <form ng-submit="addArticle()">
+        <input type="text" placeholder="Title" ng-model="title">
+        <input type="text" placeholder="Content" ng-model="content">
+        <button type="submit" class="btn btn-primary">Post</button>
+      </form>
+    </div>
+</div>

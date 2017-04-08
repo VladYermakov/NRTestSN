@@ -6,7 +6,8 @@
       // "gsvpano.js"  : "https://github.com/rharriso/GSVPano.js/blob/master/src/GSVPano.js"
       "angular": "latest",
       "angular-ui-router": "latest",
-      "bootstrap-sass-official": "latest"
+      "bootstrap-sass-official": "latest",
+      "angular-devise": "latest"
     }
   },
   "vendor": {
