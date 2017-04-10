@@ -18,6 +18,8 @@ gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
 gem 'responders'
 
+gem 'js-routes'
+
 gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # gem 'bcrypt', '~> 3.1.7'
