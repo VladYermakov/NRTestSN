@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:index, :create, :update, :destroy]
       resource :attachment, only: [:show, :update]
     end
+    resources :attachments, only: [:new, :create]
   end
 
   root to: 'application#angular'

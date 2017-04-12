@@ -11,6 +11,7 @@
 # about supported directives.
 #
 #= require angular
+#= require ng-file-upload
 #= require angular-ui-router
 #= require angular-rails-templates
 #= require angular-devise

@@ -1,4 +1,5 @@
-app = angular.module 'nrTest', ['ui.router', 'templates', 'Devise']
+app = angular.module 'nrTest', ['ui.router', 'templates',
+                                'Devise', 'ngFileUpload']
 
 app.config ($stateProvider, $urlRouterProvider, $locationProvider,
                     AuthProvider) ->
@@ -16,7 +17,7 @@ app.config ($stateProvider, $urlRouterProvider, $locationProvider,
     templateUrl: 'auth/login.html',
     controller: 'AuthCtrl',
     onEnter: ($state, Auth) ->
-      Auth.currentUser().then () ->
+      Auth.currentUser().then ->
         $state.go 'home'
 
   $stateProvider.state 'register',
@@ -24,13 +25,13 @@ app.config ($stateProvider, $urlRouterProvider, $locationProvider,
     templateUrl: 'auth/register.html',
     controller: 'AuthCtrl',
     onEnter: ($state, Auth) ->
-      Auth.currentUser().then () ->
+      Auth.currentUser().then ->
         $state.go 'home'
 
   $urlRouterProvider.otherwise '/'
 
   $locationProvider.html5Mode true
 
-  AuthProvider.loginPath    Routes.new_user_session_path('json')
-  AuthProvider.logoutPath   Routes.destroy_user_session_path('json')
-  AuthProvider.registerPath Routes.new_user_registration_path('json')
+  AuthProvider.loginPath    Routes.new_user_session_path      'json'
+  AuthProvider.logoutPath   Routes.destroy_user_session_path  'json'
+  AuthProvider.registerPath Routes.new_user_registration_path 'json'
