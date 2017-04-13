@@ -13,6 +13,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 
+gem 'cancancan'
+
 gem 'bower-rails'
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'

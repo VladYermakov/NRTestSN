@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update, :delete]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
     respond_with :api, Article.all
@@ -14,13 +14,15 @@ class Api::ArticlesController < ApplicationController
   end
 
   def update
-    respond_with :api, Article.find(params[:id])
-                              .update(article_params) # TODO: add cancancan
-                                                     # e.g. if current_user.can? :update, Article
+    article = Article.find(params[:id])
+    authorize! :update, article
+    respond_with :api, article.update(article_params)
   end
 
   def destroy
-    respond_with :api, Article.destroy(params[:id]) # TODO: cancancan
+    article = Article.find(params[:id])
+    authorize! :delete, article
+    respond_with :api, article.destroy
   end
 
   private

@@ -1,5 +1,5 @@
 class Api::AttachmentsController < ApplicationController
-  before_action :authenticate_user!, only: :update
+  before_action :authenticate_user!, only: [:create, :update]
 
   def show
     article = Article.find(params[:article_id])
@@ -12,6 +12,7 @@ class Api::AttachmentsController < ApplicationController
 
   def update
     article = Article.find params[:article_id]
+    authorize! :update, article
 
     klass = attachment_params[:type].camelize.constantize
     sym = attachment_params[:type].underscore.to_sym
