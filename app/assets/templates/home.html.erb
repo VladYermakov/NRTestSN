@@ -1,8 +1,10 @@
 <div class="container">
     <h1>The Home View!</h1>
     <ul>
-        <li ng-repeat="article in articles">
-          {{article.title}} - {{article.content}} <b>by</b> {{article.user.email}}
+        <li ng-repeat="article in articles" style="list-style: none; border-bottom: 1px solid black">
+          <div><b>{{article.title}}</b></div>
+          <div>{{article.content}}</div>
+          <div><b>by</b> {{article.user.email}}</div>
         </li>
     </ul>
     <a ng-hide="toShow || !signedIn()" ng-click="toggleShow()">Create Article</a>
@@ -10,13 +12,18 @@
       <form ng-submit="addArticle()">
         <input type="text" placeholder="Title" ng-model="title">
         <input type="text" placeholder="Content" ng-model="content">
-        <!--a ng-click="chooseAttachment('File')">Choose File</a-->
-        <a ng-repeat="att in attachment_types" ng-click="chooseAttachment(att)">
-          Choose {{capitalize(att)}}
-        </a>
+        <ul id="menu">
+          <li>
+            <a>Attach</a>
+            <ul>
+              <li ng-repeat="att in attachment_types" ng-click="chooseAttachment(att)">
+                <a>Choose {{capitalize(att)}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
         <input type="file" ng-model="file" ng-show="showFile"
                name="source" ngf-select>
-        <!--input type="text" ng-model="file" ng-show="showFile"-->
         <input type="text" ng-model="article" ng-show="showArticle">
         <input type="text" ng-model="comment" ng-show="showComment">
         <button type="submit" class="btn btn-primary">Post</button>

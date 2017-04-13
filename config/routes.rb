@@ -4,11 +4,12 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :articles, only: [:index, :show, :create, :update, :destroy] do
-      resources :comments, only: [:index, :create, :update, :destroy]
-      resource :attachment, only: [:show, :update]
+    resources :articles,      only: [:index, :show, :create, :update, :destroy] do
+      resources :comments,    only: [:index, :create, :update, :destroy]
+      resource :attachment,   only: [:show, :update]
     end
-    resources :attachments, only: [:new, :create]
+    resources :attachments,   only: [:new, :create]
+    resources :relationships, only: [:create, :destroy]
   end
 
   root to: 'application#angular'
