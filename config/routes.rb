@@ -10,6 +10,12 @@ Rails.application.routes.draw do
     end
     resources :attachments,   only: [:new, :create]
     resources :relationships, only: [:create, :destroy]
+    resources :users,         only: [] do
+      member do
+        get :following
+        get :feed
+      end
+    end
   end
 
   root to: 'application#angular'
