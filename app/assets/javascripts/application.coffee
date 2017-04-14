@@ -15,6 +15,7 @@
 #= require angular-ui-router
 #= require angular-rails-templates
 #= require angular-devise
+#= require angular-contenteditable
 #= require js-routes
 #= require_tree .
 #= require_tree ../../views

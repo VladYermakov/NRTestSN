@@ -1,32 +1,42 @@
-<div class="container">
-    <h1>The Home View!</h1>
-    <ul>
-        <li ng-repeat="article in articles" style="list-style: none; border-bottom: 1px solid black">
-          <div><b>{{article.title}}</b></div>
-          <div>{{article.content}}</div>
-          <div><b>by</b> {{article.user.email}}</div>
-        </li>
-    </ul>
-    <a ng-hide="toShow || !signedIn()" ng-click="toggleShow()">Create Article</a>
-    <div ng-show="signedIn() && toShow">
-      <form ng-submit="addArticle()">
-        <input type="text" placeholder="Title" ng-model="title">
-        <input type="text" placeholder="Content" ng-model="content">
-        <ul id="menu">
-          <li>
-            <a>Attach</a>
-            <ul>
-              <li ng-repeat="att in attachment_types" ng-click="chooseAttachment(att)">
-                <a>Choose {{capitalize(att)}}</a>
-              </li>
-            </ul>
+<h1>The Home View!</h1>
+<ul>
+    <li ng-repeat="article in articles" class="article">
+      <div class="article-title">
+        {{article.title}}
+      </div>
+      <div class="article-content">
+        {{article.content}}
+      </div>
+      <div class="article-attachment" ng-if="hasAttachment(article)">
+        <a ng-href="{{article_link[article.id]}}"
+           ng-model="article_link[article.id]" target="_blank">
+          <i class="fa fa-paperclip"></i> Open Attachment
+        </a>
+      </div>
+      <div class="article-author">
+        <b>by</b> {{article.user.email}}
+      </div>
+    </li>
+</ul>
+<a ng-hide="toShow || !signedIn()" ng-click="toggleShow()">Create Article</a>
+<div ng-show="signedIn() && toShow">
+  <form ng-submit="addArticle()">
+    <input type="text" placeholder="Title" ng-model="title">
+    <input type="text" placeholder="Content" ng-model="content">
+    <ul id="menu">
+      <li>
+        <a>Attach</a>
+        <ul>
+          <li ng-repeat="att in attachment_types" ng-click="chooseAttachment(att)">
+            <a>Choose {{capitalize(att)}}</a>
           </li>
         </ul>
-        <input type="file" ng-model="file" ng-show="showFile"
-               name="source" ngf-select>
-        <input type="text" ng-model="article" ng-show="showArticle">
-        <input type="text" ng-model="comment" ng-show="showComment">
-        <button type="submit" class="btn btn-primary">Post</button>
-      </form>
-    </div>
+      </li>
+    </ul>
+    <input type="file" ng-model="file" ng-show="showFile"
+           name="source" ngf-select>
+    <input type="text" ng-model="article" ng-show="showArticle">
+    <input type="text" ng-model="comment" ng-show="showComment">
+    <button type="submit" class="btn btn-primary">Post</button>
+  </form>
 </div>

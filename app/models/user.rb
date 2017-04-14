@@ -4,8 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :articles
-  has_many :comments
+  has_many :articles, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   has_many :relationships,         foreign_key: 'follower_id', dependent: :destroy
   has_many :reverse_relationships, foreign_key: 'followed_id',
@@ -15,6 +15,10 @@ class User < ApplicationRecord
 
   def followed_users_articles
     Article.from_users_followed_by self
+  end
+
+  def followed_users_with_articles_and_comments
+    followed_users.includes articles: :comments
   end
 
   def following?(other_user)

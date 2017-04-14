@@ -8,7 +8,8 @@
       "angular-ui-router": "latest",
       "bootstrap-sass-official": "latest",
       "angular-devise": "latest",
-      "ng-file-upload": "latest"
+      "ng-file-upload": "latest",
+      "angular-contenteditable": "latest"
     }
   },
   "vendor": {

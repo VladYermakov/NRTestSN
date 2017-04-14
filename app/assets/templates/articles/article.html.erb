@@ -1,0 +1,38 @@
+<div class="article">
+  <div class="article-title">
+    {{article.title}}
+  </div>
+  <div class="article-content">
+    {{article.content}}
+  </div>
+  <div class="article-attachment" ng-if="hasAttachment">
+    <a ng-href="{{article_link}}"
+       ng-model="article_link" target="_blank">
+      <i class="fa fa-paperclip"></i> Open Attachment
+    </a>
+  </div>
+  <div class="article-author">
+    <b>by</b> {{article.user.email}}
+  </div>
+  <div class="article-comments">
+    <ul>
+      <li class="comment" ng-repeat="comment in comments" >
+        <a ng-name="{{comment.id}}"></a>
+        <div class="comment-content">
+          {{comment.content}}
+        </div>
+        <div class="comment-author">
+          <b>by</b> {{comment.user.email}}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="create-comment">
+    <form ng-submit="createComment()">
+      <span class="input-group comment-content-input" ng-model="content"
+           contenteditable="true">
+      </span>
+      <button type="submit">Post</button>
+    </form>
+  </div>
+</div>

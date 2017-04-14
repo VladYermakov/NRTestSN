@@ -1,19 +1,24 @@
-class Api::CommentsController < ApplicationBaseController
+class Api::CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    respond_with :api, Comment.find_by article_id: params[:article_id]
+    article = Article.find params[:article_id]
+    respond_with :api, article.comments
+  end
+
+  def show
+    respond_with :api, Comment.find(params[:id])
   end
 
   def create
-    respond_with :api, Comment.create comment_params.merge(user_id:    current_user.id,
-                                                           article_id: params[:article_id])
+    respond_with :api, Comment.create(comment_params.merge(user_id:    current_user.id,
+                                                           article_id: params[:article_id]))
   end
 
   def update
     comment = Comment.find params[:id]
     authorize! :update, comment
-    respond_with :api, comment.update comment_params
+    respond_with :api, comment.update(comment_params)
   end
 
   def destroy

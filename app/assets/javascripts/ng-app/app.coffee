@@ -1,5 +1,5 @@
-app = angular.module 'nrTest', ['ui.router', 'templates',
-                                'Devise', 'ngFileUpload']
+app = angular.module 'nrTest', ['ui.router', 'templates', 'Devise',
+                                'ngFileUpload', 'contenteditable']
 
 app.config ($stateProvider, $urlRouterProvider, $locationProvider,
                     AuthProvider) ->
@@ -27,6 +27,16 @@ app.config ($stateProvider, $urlRouterProvider, $locationProvider,
     onEnter: ($state, Auth) ->
       Auth.currentUser().then ->
         $state.go 'home'
+
+  $stateProvider.state 'article',
+    url: '/articles/:article_id',
+    templateUrl: 'articles/article.html',
+    controller: 'ArticlesCtrl'
+
+  $stateProvider.state 'users',
+    url: '/users/:user_id',
+    templateUrl: 'users/user.html',
+    controller: 'UsersCtrl'
 
   $urlRouterProvider.otherwise '/'
 

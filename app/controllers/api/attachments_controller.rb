@@ -2,8 +2,10 @@ class Api::AttachmentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update]
 
   def show
-    article = Article.find(params[:article_id])
-    respond_with :api, article.attachment
+    attachment = AttachmentFile.find(params[:id])
+    @link = attachment.source.expiring_url(10)
+    @title = attachment.source_file_name
+    render "show", layout: false
   end
 
   def create

@@ -1,6 +1,6 @@
 app = angular.module 'nrTest'
 
-app.factory 'articles', ($http) ->
+app.factory 'articles', (comments, $http) ->
   o = articles: []
 
   o.getAll = ->
@@ -26,5 +26,9 @@ app.factory 'articles', ($http) ->
     params = type: type
     params[type] = attachment
     $http.put Routes.api_article_attachment_path(id, 'json'), attachment: params
+
+  o.getAttachment = (attachment_id) ->
+    $http.get(Routes.file_attachment_path(attachment_id, 'json')).then (res) ->
+      res
 
   o

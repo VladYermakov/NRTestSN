@@ -1,11 +1,27 @@
 app = angular.module 'nrTest'
 
-app.controller 'HomeCtrl', ($scope, articles, Auth, Upload) ->
+app.controller 'HomeCtrl', ($scope, articles, comments, Auth, Upload) ->
   $scope.articles = articles.articles
   $scope.signedIn = Auth.isAuthenticated
   $scope.toShow = false
   $scope.toClear = false
   $scope.attachment_types = ['article', 'comment', 'file']
+  $scope.article_link = {}
+
+  $scope.hasAttachment = (article)->
+    article.attachment_id isnt null
+
+  attachLink = (article) ->
+    if article.attachment_type == 'Article'
+      $scope.article_link[article.id] = '/articles/' + article.attachment_id
+    else if article.attachment_type == 'Comment'
+      comments.get(article.attachment_id).then (com) ->
+        $scope.article_link[article.id] = '/articles/' +  com.article_id + '#' + article.attachment_id
+    else
+      $scope.article_link[article.id] = '/files/' + article.attachment_id
+
+  for article in $scope.articles
+    attachLink(article)
 
   $scope.upload = (article_id, file) ->
     options =
