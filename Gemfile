@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'paperclip'
 
-gem 'rspec'
+gem 'font-awesome-rails'
 
 # gem 'capistrano-rails', group: :development
 
@@ -39,6 +39,12 @@ end
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
+end
+
+group :test do
+  gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'factory_girl_rails'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
