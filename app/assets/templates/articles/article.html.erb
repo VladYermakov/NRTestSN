@@ -17,7 +17,7 @@
   <div class="article-comments">
     <ul>
       <li class="comment" ng-repeat="comment in comments" >
-        <a ng-name="{{comment.id}}"></a>
+        <a name="comment{{comment.id}}"></a>
         <div class="comment-content">
           {{comment.content}}
         </div>
@@ -27,12 +27,13 @@
       </li>
     </ul>
   </div>
-  <div class="create-comment">
+  <div class="create-comment" ng-if="signedIn()">
     <form ng-submit="createComment()">
-      <span class="input-group comment-content-input" ng-model="content"
-           contenteditable="true">
-      </span>
-      <button type="submit">Post</button>
+      <div class="comment-content" ng-model="$parent.content"
+           contenteditable="true" ng-change="change()">
+      </div>
+      <div class="content placeholder" ng-click="focus()">Type your comment...</div>
+      <button type="submit" class="btn btn-primary comment-submit">Post</button>
     </form>
   </div>
 </div>

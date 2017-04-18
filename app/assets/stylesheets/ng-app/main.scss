@@ -1,85 +1,30 @@
 @import "bootstrap";
 @import "font-awesome";
+@import "menu";
+@import "colors";
+@import "article";
 
 body {
-  background-color: lightgrey;
+  background-color: $background-color;
 }
 
-.article {
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  z-index: 100;
-  background-color: white;
-  margin: 15px;
-  width: 500px;
-  list-style: none;
-
-  .article-title,
-  .article-content,
-  .article-author,
-  .article-attachment {
-    margin: 5px 10px;
-  }
-
-  .article-title {
-    padding-top: 5px;
-    font-weight: bold;
-  }
-
-  .article-author {
-    border-top: 1px solid lightgrey;
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
+.container-navbar {
+  width: 720px;
+  margin: 0 auto;
+  padding: 0 15px;
+  //margin-top: 50px;
 }
 
-.menu {
-  width: 100%;
-  background-color: white;
-  .pull-right {
-    background-color: white;
-  }
+.container {
+  width: 720px;
+  margin: 0 auto;
+  padding-top: 50px;
 }
 
-.article-comments {
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
-
-  ul {
-    padding: 0;
-  }
-
-  .comment {
-    list-style: none;
-    border-bottom: 1px solid lightgrey;
-    margin-top: 5px;
-    margin-left: 30px;
-    margin-right: 10px;
-
-    .comment-content,
-    .comment-author {
-      padding-bottom: 5px;
-    }
-  }
-
-  .comment:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
+ul {
+  padding: 0;
 }
-.create-comment {
-  margin-left: 30px;
-  margin-top: 5px;
-  margin-bottom: 5px;
 
-  .comment-content-input {
-    width: 380px;
-    height: 25px;
-    border: 1px solid lightgrey;
-    display: inline-block;
-
-    &:focus {
-      height: 50px;
-    }
-  }
+.btn-primary {
+  background-color: $primary-color;
 }

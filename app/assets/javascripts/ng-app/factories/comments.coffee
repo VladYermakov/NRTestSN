@@ -1,7 +1,8 @@
 app = angular.module 'nrTest'
 
 app.factory 'comments', ($http) ->
-  o = comments: []
+  o =
+    comments: []
 
   o.getAll = (article_id) ->
     $http.get(Routes.api_article_comments_path(article_id, 'json')).then (res) ->

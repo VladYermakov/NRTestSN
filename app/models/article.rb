@@ -7,7 +7,7 @@ class Article < ApplicationRecord
 
   belongs_to :user
   belongs_to :attachment, polymorphic: true, required: false
-  has_many :articles, as: :attachment
+  has_many :articles, as: :attachment, dependent: :nullify
   has_many :comments, dependent: :destroy
 
   def self.from_users_followed_by(user)

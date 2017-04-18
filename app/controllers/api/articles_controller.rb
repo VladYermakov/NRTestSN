@@ -17,12 +17,16 @@ class Api::ArticlesController < ApplicationController
     article = Article.find(params[:id])
     authorize! :update, article
     respond_with :api, article.update(article_params)
+  rescue CanCan::AccessDenied => e
+    render json: { error: e }, status: 401
   end
 
   def destroy
     article = Article.find(params[:id])
     authorize! :delete, article
     respond_with :api, article.destroy
+  rescue CanCan::AccessDenied => e
+    render json: { error: e }, status: 401
   end
 
   private

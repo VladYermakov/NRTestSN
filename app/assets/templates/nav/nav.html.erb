@@ -1,11 +1,18 @@
-<div class="menu">
-  <div class="pull-right" ng-controller="NavCtrl">
-    <ul class="nav navbar-nav">
-      <li><a href="/">Home</a></li>
-      <li ng-hide="signedIn()"><a href="/login">Log In</a></li>
-      <li ng-hide="signedIn()"><a href="/register">Register</a></li>
-      <li ng-show="signedIn()"><a href="/">{{ user.email }}</a></li>
-      <li ng-show="signedIn()"><a ng-click="logout()" href="/">Log Out</a></li>
-    </ul>
+<div class="menubar">
+  <div class="container-navbar">
+    <div class="pull-left">
+      <ul class="nav navbar-nav">
+        <li><a href="/" id="logo">NRTestSN</a></li>
+      </ul>
+    </div>
+    <div class="pull-right" ng-controller="NavCtrl">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li ng-hide="signedIn()"><a href="/login">Log In</a></li>
+        <li ng-hide="signedIn()"><a href="/register">Register</a></li>
+        <li ng-show="signedIn()"><a href="/">{{ user.email }}</a></li>
+        <li ng-show="signedIn()"><a ng-click="logout()" href="/">Log Out</a></li>
+      </ul>
+    </div>
   </div>
 </div>

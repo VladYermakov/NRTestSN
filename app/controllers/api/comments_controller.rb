@@ -19,12 +19,16 @@ class Api::CommentsController < ApplicationController
     comment = Comment.find params[:id]
     authorize! :update, comment
     respond_with :api, comment.update(comment_params)
+  rescue CanCan::AccessDenied => e
+    render json: { error: e }, status: 401
   end
 
   def destroy
     comment = Comment.find params[:id]
     authorize! :delete, comment
     respond_with :api, comment.destroy
+  rescue CanCan::AccessDenied => e
+    render json: { error: e }, status: 401
   end
 
   private

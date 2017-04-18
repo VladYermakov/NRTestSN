@@ -22,6 +22,9 @@ class Api::AttachmentsController < ApplicationController
 
     article.update attachment: attachment
     respond_with :api, article.attachment, location: nil
+
+  rescue CanCan::AccessDenied => e
+    render json: { error: e }, status: 401
   end
 
   private
