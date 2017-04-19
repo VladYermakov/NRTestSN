@@ -1,17 +1,21 @@
-app = angular.module 'nrTest'
+'use strict'
 
-app.controller 'NavCtrl', ($scope, Auth) ->
-  $scope.signedIn = Auth.isAuthenticated
-  $scope.logout = Auth.logout
+angular.module 'nrTest'
+.controller 'NavCtrl', class NavCtrl
 
-  Auth.currentUser().then (user) ->
-    $scope.user = user
+  constructor: ($scope, $rootScope, Auth) ->
 
-  $scope.$on 'devise:new-registration', (e, user) ->
-    $scope.user = user
+    @signedIn = Auth.isAuthenticated
+    @logout = Auth.logout
+    
+    Auth.currentUser().then (user) =>
+      @user = user
 
-  $scope.$on 'devise:login', (e, user) ->
-    $scope.user = user
+    $scope.$on 'devise:new-registration', (e, user) =>
+      @user = user
 
-  $scope.$on 'devise:logout', (e, user) ->
-    $scope.user = {}
+    $scope.$on 'devise:login', (e, user) =>
+      @user = user
+
+    $scope.$on 'devise:logout', (e, user) =>
+      @user = {}

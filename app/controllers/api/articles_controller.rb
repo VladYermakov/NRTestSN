@@ -2,11 +2,15 @@ class Api::ArticlesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    respond_with :api, Article.all
+    respond_with Article.all
+  end
+
+  def user_articles
+    respond_with Article.where user_id: params[:id]
   end
 
   def show
-    respond_with :api, Article.find(params[:id])
+    respond_with Article.find(params[:id])
   end
 
   def create

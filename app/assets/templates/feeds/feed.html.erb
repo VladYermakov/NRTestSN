@@ -1,0 +1,84 @@
+<div id="layer-bg" ng-click="ctrl.hideAll()"></div>
+<div id="resources-layer">
+  <div class="container">
+    <ul class="resource-choose">
+      <li class="header">
+        <div class="pull-left title">Choose {{ ctrl.resourceType }}</div>
+        <div class="pull-right close">
+          <i class="fa fa-close" ng-click="ctrl.hideAll()"></i>
+        </div>
+      </li>
+      <li ng-repeat="resource in ctrl.resources">
+        <div class="resource" ng-click="ctrl.chooseResource(ctrl.resourceType, resource)">
+          <div class="resource-title">{{ ctrl.getTitle(ctrl.resourceType, resource) }}</div>
+          <div class="resource-author"><b>by</b> {{ resource.user.email }}</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<ul>
+  <li class="article" ng-if="ctrl.signedIn">
+    <div class="create-article">
+      <form ng-submit="ctrl.addArticle()">
+        <div class="article-title single-line" contenteditable="true"
+             ng-model="ctrl.title" ng-change="ctrl.change('title')">
+        </div>
+        <div class="title placeholder" ng-click="ctrl.focus('title')">Type article title here...</div>
+        <div class="article-content" contenteditable="true"
+             ng-model="ctrl.content" ng-change="ctrl.change('content')">
+        </div>
+        <div class="content placeholder" ng-click="ctrl.focus('content')">Type article content here...</div>
+        <div class="article-attachment" ng-if="ctrl.attachment.link">
+          <a ng-href="{{ ctrl.attachment.link }}"
+             ng-model="ctrl.attachment.link" target="_blank">
+            <i class="fa fa-{{ ctrl.attachment.icon }}"></i>
+            <span class="attachment-name">{{ ctrl.attachment.name }}</span>
+          </a>
+          <a ng-click="ctrl.deleteLink()">
+            <i class="fa fa-close"></i>
+          </a>
+        </div>
+        <div class="article-divider"></div>
+        <div class="article-attachments">
+          <i class="fa fa-lg fa-pencil" ng-click="ctrl.showChoose('Article')"></i>
+          <i class="fa fa-lg fa-comment" ng-click="ctrl.showChoose('Comment')"></i>
+          <i class="fa fa-lg fa-file" ngf-select
+             ng-model="ctrl.file" ng-change="ctrl.upload()"></i>
+        </div>
+        <button type="submit" class="btn btn-primary article-submit">Post</button>
+      </form>
+    </div>
+  </li>
+  <li ng-repeat="article in ctrl.feedArticles" class="article" ng-if="ctrl.alive[article.id]">
+    <div class="pull-right" ng-if="ctrl.signedIn">
+      <ul class="menu">
+        <li>
+          <i class="fa fa-ellipsis-h fa-lg menu-dots"></i>
+          <ul>
+            <li><a ng-click="ctrl.editArticle(article.id)">Edit Article</a></li>
+            <li><a ng-click="ctrl.deleteArticle(article.id)">Delete Article</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="article-title">
+      <a ng-href="/articles/{{ article.id }}" class="article-link"
+         id="title{{ article.id }}">
+         {{ article.title }}
+       </a>
+    </div>
+    <div class="article-content" id="content{{ article.id }}">
+      {{ article.content }}
+    </div>
+    <div class="article-attachment" ng-if="ctrl.hasAttachment(article)">
+      <a ng-href="{{ ctrl.attachmentLink[article.id] }}"
+         ng-model="ctrl.attachmentLink[article.id]" target="_blank">
+        <i class="fa fa-paperclip"></i> Open Attachment
+      </a>
+    </div>
+    <div class="article-author">
+      <b>by</b> {{ article.user.email }}
+    </div>
+  </li>
+</ul>

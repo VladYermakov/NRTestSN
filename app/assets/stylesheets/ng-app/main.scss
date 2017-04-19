@@ -1,24 +1,26 @@
 @import "bootstrap";
 @import "font-awesome";
-@import "menu";
 @import "colors";
+@import "menu";
 @import "article";
+@import "login";
 
 body {
   background-color: $background-color;
 }
 
 .container-navbar {
-  width: 720px;
+  width: 670px;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 0;
   //margin-top: 50px;
 }
 
 .container {
-  width: 720px;
+  width: 670px;
   margin: 0 auto;
-  padding-top: 50px;
+  padding: 50px 0 0 0;
+  position: relative;
 }
 
 ul {
@@ -27,4 +29,19 @@ ul {
 
 .btn-primary {
   background-color: $primary-color;
+}
+
+#layer-bg {
+  height: 100%;
+  width: 100%;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background: black;
+  opacity: 0.8;
+  z-index: 500;
+
+  display: none;
 }

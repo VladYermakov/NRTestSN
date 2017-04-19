@@ -1,0 +1,45 @@
+.login,
+.register {
+  // width: 100%;
+
+  position: absolute;
+
+  margin: 10px auto 0;
+
+  padding: 10px;
+
+  background: white;
+
+  border: 1px solid $border-color;
+  border-radius: 3px;
+
+  box-shadow: 0 0 1px $border-color;
+
+  .input-group {
+    padding-bottom: 20px;
+    height: 50px;
+    margin: 0 auto;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    input {
+      border-radius: 3px;
+    }
+
+    [type="submit"] {
+      width: 253px;
+    }
+  }
+}
+
+.login {
+  top: 55px;
+  right: 0;
+}
+
+.register {
+  top: 250px;
+  right: 0;
+}

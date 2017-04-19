@@ -2,12 +2,16 @@ class Api::CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    article = Article.find params[:article_id]
-    respond_with :api, article.comments
+    comments = if params[:article_id]
+      Article.find(params[:article_id]).comments
+    else
+      Comment.all
+    end
+    respond_with comments
   end
 
   def show
-    respond_with :api, Comment.find(params[:id])
+    respond_with Comment.find(params[:id])
   end
 
   def create

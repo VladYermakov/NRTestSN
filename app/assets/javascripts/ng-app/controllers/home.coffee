@@ -1,78 +1,30 @@
-app = angular.module 'nrTest'
+'use strict'
 
-app.controller 'HomeCtrl', ($scope, articles, comments, Auth, Upload) ->
-  $scope.articles = articles.articles
-  $scope.signedIn = Auth.isAuthenticated
-  $scope.toShow = false
-  $scope.toClear = false
-  $scope.attachment_types = ['article', 'comment', 'file']
-  $scope.article_link = {}
+angular.module 'nrTest'
+.controller 'HomeCtrl', class HomeCtrl
 
-  $scope.hasAttachment = (article)->
-    article.attachment_id isnt null
+  constructor: (articles, comments) ->
 
-  attachLink = (article) ->
-    if article.attachment_type == 'Article'
-      $scope.article_link[article.id] = '/articles/' + article.attachment_id
-    else if article.attachment_type == 'Comment'
-      comments.get(article.attachment_id).then (com) ->
-        $scope.article_link[article.id] = '/articles/' +  com.article_id + '#' + article.attachment_id
-    else
-      $scope.article_link[article.id] = '/files/' + article.attachment_id
+    @articles = articles.articles
+    @attachmentLink = {}
 
-  for article in $scope.articles
-    attachLink(article)
+    $(document).ready =>
+      $('.container').css 'width', '960'
+      $('.container-navbar').css 'width', '960'
 
-  $scope.upload = (article_id, file) ->
-    options =
-      url:    Routes.api_attachments_path('json')
-      method: 'POST'
-      headers:
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-      file: file
-      data:
-        source: file
+    attachLink = (article) =>
+      if article.attachment_type is 'Article'
+        @attachmentLink[article.id] = '/articles/' + article.attachment_id
 
-    Upload.upload(options).then (res) ->
-      articles.updateAttachment article_id, 'attachment_file', id: res.data.id
+      else if article.attachment_type is 'Comment'
+        comments.get(article.attachment_id).then (com) =>
+          @attachmentLink[article.id] = '/articles/' +  com.article_id + '#comment' + article.attachment_id
 
-  $scope.capitalize = (str) ->
-    str.charAt(0).toUpperCase() + str.slice(1)
+      else if article.attachment_type is 'AttachmentFile'
+        @attachmentLink[article.id] = '/files/' + article.attachment_id
 
-  $scope.clearShowings = ->
-    for att in $scope.attachment_types
-      $scope['show' + $scope.capitalize(att)] = false
+    for article in @articles
+      attachLink(article)
 
-  $scope.clearShowings()
-
-  $scope.chooseAttachment = (att_type) ->
-    $scope.clearShowings()
-    $scope['show' + $scope.capitalize(att_type)] = true
-
-  $scope.toggleShow = ->
-    $scope.toShow ^= true
-
-  $scope.addArticle = ->
-    if !$scope.title || $scope.title == '' || !$scope.content || $scope.content == ''
-      return
-
-    attachment =
-      file:    $scope.file
-      article: $scope.article
-      comment: $scope.comment
-
-    articles.create(title: $scope.title, content: $scope.content).then (article_id) ->
-      if attachment.file && attachment.file != ''
-        $scope.upload article_id, attachment.file
-
-      if attachment.article && attachment.article != ''
-        articles.updateAttachment article_id, 'article', id: attachment.article
-
-      if attachment.comment && attachment.comment != ''
-        articles.updateAttachment article_id, 'comment', id: attachment.comment
-
-    $scope.title = ''
-    $scope.content = ''
-    $scope.article = ''
-    $scope.comment = ''
-    $scope.file = ''
+    @hasAttachment = (article) =>
+      article.attachment_id isnt null

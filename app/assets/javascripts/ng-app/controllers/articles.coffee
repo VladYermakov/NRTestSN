@@ -1,52 +1,65 @@
-app = angular.module 'nrTest'
+'use strict'
 
-app.controller 'ArticlesCtrl', ($state, $location, $timeout, $scope, $anchorScroll, Auth, articles, comments) ->
-  $scope.comments = comments.comments
-  $scope.signedIn = Auth.isAuthenticated
-  $scope.article = articles.article
-  $scope.hasAttachment = $scope.article.attachment_id isnt null
+angular.module 'nrTest'
+.controller 'ArticlesCtrl', class ArticlesCtrl
 
-  $scope.focus = ->
-    $(".create-comment .comment-content")[0].focus()
+  constructor: ($location, $timeout, $anchorScroll, Auth, articles, comments) ->
 
-  $(document).ready ->
-    comment_hash = $location.hash()
-    $anchorScroll()
+    @comments = comments.comments
+    @signedIn = Auth.isAuthenticated()
+    @article = articles.article
+    @hasAttachment = @article.attachment_id isnt null
 
-    $($("[name='#{comment_hash}']").parent()).css 'background', '#e4eaf0'
+    preventValue = =>
+      $(".create-comment .comment-content")[0].innerHTML = '<br>'
+      @change()
 
-    $timeout ->
-      $($("[name='#{comment_hash}']").parent()).css 'background', 'none'
-    , 500
+    $(document).ready =>
+      commentHash = $location.hash()
+      $anchorScroll()
 
-  $scope.change = ->
-    value = $(".create-comment .comment-content")[0].innerHTML
-    console.log value
-    if !value || value == '' || value == '<br>'
-      $(".create-comment .content.placeholder").css 'visibility', 'visible'
-    else
-      $(".create-comment .content.placeholder").css 'visibility', 'hidden'
+      $($("[name='#{commentHash}']").parent()).css('background', '#e4eaf0')
 
-  $(document).ready ->
-    $(".create-comment .comment-content")[0].innerHTML = '<br>'
-    $scope.change()
+      $timeout ->
+        $($("[name='#{commentHash}']").parent()).css('background', 'none')
+      , 500
 
-  if $scope.article.attachment_type == 'Article'
-    $scope.article_link = '/articles/' + $scope.article.attachment_id
-  else if $scope.article.attachment_type == 'Comment'
-    comments.get($scope.article.attachment_id).then (com) ->
-      $scope.article_link = '/articles/' +  com.article_id + '/#' + $scope.article.attachment_id
-  else
-    $scope.article_link = '/files/' + $scope.article.attachment_id
+      preventValue()
 
-  $scope.createComment = ->
-    if $scope.content then $scope.content = $scope.content.replace /<br>/g, '\n'
+      $('.container').css 'width', '670'
+      $('.container-navbar').css 'width', '670'
 
-    if !$scope.content || $scope.content == '' then return
+    @focus = =>
+      $(".create-comment .comment-content")[0].focus()
 
-    comments.create($scope.article.id, content: $scope.content)
-    # $('.article-comments').css('border-bottom', '1px solid lightgrey')
+    @change = =>
+      value = $(".create-comment .comment-content")[0].innerHTML
 
-    $scope.content = '<br>'
-    $(".create-comment .comment-content")[0].innerHTML = '<br>'
-    $scope.change()
+      if not value or value is '' or value is '<br>'
+        $(".create-comment .content.placeholder").css('visibility', 'visible')
+      else
+        $(".create-comment .content.placeholder").css('visibility', 'hidden')
+
+
+    if @article.attachment_type is 'Article'
+      @attachmentLink = '/articles/' + @article.attachment_id
+
+    else if @article.attachment_type is 'Comment'
+      comments.get(@article.attachment_id).then (com) =>
+        @attachmentLink = '/articles/' +  com.article_id + '/#' + @article.attachment_id
+
+    else if @article.attachment_type is 'AttachmentFile'
+      @attachmentLink = '/files/' + @article.attachment_id
+
+
+    @createComment = =>
+      if @content
+        @content = @content.replace(/<br>/g, '\n').trim()
+
+      if not @content or @content is ''
+        return
+
+      comments.create(@article.id, content: @content)
+
+      @content = '<br>'
+      preventValue()

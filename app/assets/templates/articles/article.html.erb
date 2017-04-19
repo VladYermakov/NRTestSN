@@ -1,22 +1,22 @@
 <div class="article">
   <div class="article-title">
-    {{article.title}}
+    {{ctrl.article.title}}
   </div>
   <div class="article-content">
-    {{article.content}}
+    {{ctrl.article.content}}
   </div>
-  <div class="article-attachment" ng-if="hasAttachment">
-    <a ng-href="{{article_link}}"
-       ng-model="article_link" target="_blank">
+  <div class="article-attachment" ng-if="ctrl.hasAttachment">
+    <a ng-href="{{ctrl.attachmentLink}}"
+       ng-model="ctrl.attachmentLink" target="_blank">
       <i class="fa fa-paperclip"></i> Open Attachment
     </a>
   </div>
   <div class="article-author">
-    <b>by</b> {{article.user.email}}
+    <b>by</b> {{ctrl.article.user.email}}
   </div>
   <div class="article-comments">
     <ul>
-      <li class="comment" ng-repeat="comment in comments" >
+      <li class="comment" ng-repeat="comment in ctrl.comments" >
         <a name="comment{{comment.id}}"></a>
         <div class="comment-content">
           {{comment.content}}
@@ -27,12 +27,12 @@
       </li>
     </ul>
   </div>
-  <div class="create-comment" ng-if="signedIn()">
-    <form ng-submit="createComment()">
-      <div class="comment-content" ng-model="$parent.content"
-           contenteditable="true" ng-change="change()">
+  <div class="create-comment" ng-if="ctrl.signedIn">
+    <form ng-submit="ctrl.createComment()">
+      <div class="comment-content" ng-model="ctrl.content"
+           contenteditable="true" ng-change="ctrl.change()">
       </div>
-      <div class="content placeholder" ng-click="focus()">Type your comment...</div>
+      <div class="content placeholder" ng-click="ctrl.focus()">Type your comment...</div>
       <button type="submit" class="btn btn-primary comment-submit">Post</button>
     </form>
   </div>

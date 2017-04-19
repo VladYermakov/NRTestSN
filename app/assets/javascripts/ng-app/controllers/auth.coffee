@@ -1,10 +1,14 @@
-app = angular.module 'nrTest'
+'use strict'
 
-app.controller 'AuthCtrl', ($scope, $state, Auth) ->
-  $scope.login = ->
-    Auth.login($scope.user).then ->
-      $state.go 'home'
+angular.module 'nrTest'
+.controller 'AuthCtrl', class AuthCtrl
 
-  $scope.register = ->
-    Auth.register($scope.user).then ->
-      $state.go 'home'
+  constructor: ($state, Auth) ->
+
+    @login = =>
+      Auth.login(@user).then ->
+        $state.go 'feed'
+
+    @register = =>
+      Auth.register(@user).then ->
+        $state.go 'feed'
