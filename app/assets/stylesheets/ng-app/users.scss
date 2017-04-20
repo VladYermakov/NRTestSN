@@ -22,9 +22,52 @@
   .user-followers {
     padding-top: 5px;
   }
+
+  .user-following {
+    padding-bottom: 5px;
+  }
+
+  .user-follow-unfollow {
+    border-top: 1px solid $border-color;
+    padding-top: 10px;
+  }
 }
 
 .user-articles {
   position: absolute;
   left: 290px;
+}
+
+.users {
+  .user {
+    position: static;
+    list-style: none;
+    margin-top: 10px;
+    width: auto;
+    border-radius: 5px;
+
+    .user-email {
+      padding-bottom: 0;
+    }
+
+    .article {
+      width: 100%;
+      margin-bottom: 0;
+
+      .comment {
+
+        border-top: 1px solid $border-color;
+
+        i {
+          float:left;
+          margin: 5px 10px;
+        }
+
+        .comment-content,
+        .comment-author {
+          margin-left: 30px;
+        }
+      }
+    }
+  }
 }

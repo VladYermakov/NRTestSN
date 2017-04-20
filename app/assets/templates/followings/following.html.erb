@@ -1,0 +1,36 @@
+<ul class="users">
+  <li class="user">{{ ctrl.action }} <a ng-href="/users/{{ ctrl.user.id }}">
+      {{ ctrl.user.email }}
+    </a>
+  </li>
+  <li class="user" ng-if="ctrl.users.length == 0">No {{ ctrl.fol }}</li>
+  <li ng-repeat="user in ctrl.users" class="user">
+    <div class="user-email">
+      <a ng-href="/users/{{ user.id }}">
+        {{ user.email }}
+      </a>
+    </div>
+    <div class="article" ng-if="user.articles[0]">
+      <div class="article-title">
+        <a ng-href="/articles/{{ user.articles[0].id }}" class="article-link">
+          {{ user.articles[0].title }}
+        </a>
+      </div>
+      <div class="article-content">
+        {{ user.articles[0].content }}
+      </div>
+      <div class="comment" ng-if="user.articles[0].comments[0]">
+        <i class="fa fa-comment"></i>
+        <div class="comment-content">
+          {{ user.articles[0].comments[0].content }}
+        </div>
+        <div class="comment-author">
+          <b>by</b>
+          <a ng-href="/users/{{ user.articles[0].comments[0].user.id }}">
+            {{ user.articles[0].comments[0].user.email }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>

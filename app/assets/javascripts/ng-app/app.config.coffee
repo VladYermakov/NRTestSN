@@ -41,17 +41,39 @@ angular.module 'nrTest'
       url: '/feed'
       templateUrl: 'feeds/feed.html'
       controller: 'FeedCtrl as ctrl'
+      onEnter: ($state, Auth) ->
+        Auth.currentUser().then null, (res) ->
+          $state.go 'home'
       resolve:
         feedPromise: (Auth, users) ->
           Auth.currentUser().then (res) ->
             users.getFeed(res.id)
+          , (err) ->
+            console.log err
         articlePromise: (articles) ->
           articles.getAll()
         commentPromise: (comments) ->
           comments.getAll()
-      onEnter: ($state, Auth) ->
-        if not Auth.isAuthenticated()
-          $state.go 'home'
+
+    $stateProvider.state 'following',
+      url: '/users/:user_id/following'
+      templateUrl: 'followings/following.html'
+      controller: 'FollowingCtrl as ctrl'
+      resolve:
+        followingPromise: ($stateParams, users) ->
+          users.getFollowed($stateParams.user_id)
+        userPromise: ($stateParams, users) ->
+          users.get($stateParams.user_id)
+
+    $stateProvider.state 'followers',
+      url: '/users/:user_id/followers'
+      templateUrl: 'followings/following.html'
+      controller: 'FollowingCtrl as ctrl'
+      resolve:
+        followersPromise: ($stateParams, users) ->
+          users.getFollowers($stateParams.user_id)
+        userPromise: ($stateParams, users) ->
+          users.get($stateParams.user_id)
 
     # $urlRouterProvider.otherwise '/feed'
     $urlRouterProvider.otherwise '/'

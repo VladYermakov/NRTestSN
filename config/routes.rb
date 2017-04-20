@@ -10,8 +10,13 @@ Rails.application.routes.draw do
     end
     resources :comments,      only: [:index, :show, :update, :destroy]
     resources :attachments,   only: [:new, :create]
-    resources :relationships, only: [:create, :destroy]
-    resources :users,         only: [] do
+    resources :relationships, only: [:create] do
+      collection do
+        delete :destroy
+        get :show
+      end
+    end
+    resources :users,         only: [:show] do
       member do
         get :following
         get :followers

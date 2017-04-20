@@ -17,6 +17,9 @@
       {{ ctrl.user.following_count }}
     </a>
   </div>
+  <div class="user-follow-unfollow" ng-if="ctrl.showFU">
+    <button class="btn btn-default" ng-click="ctrl.toggleFollow()">{{ ctrl.fu }}</button>
+  </div>
 </div>
 <ul class="user-articles">
   <li ng-repeat="article in ctrl.articles" class="article">

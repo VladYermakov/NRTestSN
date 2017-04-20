@@ -3,7 +3,7 @@
 angular.module 'nrTest'
 .controller 'UsersCtrl', class UsersCtrl
 
-  constructor: (articles, comments, users) ->
+  constructor: (Auth, articles, comments, users) ->
 
     MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
               'August', 'September', 'October', 'November', 'December']
@@ -11,6 +11,13 @@ angular.module 'nrTest'
     @articles = articles.userArticles
     @user = @articles[0].user
     @attachmentLink = {}
+
+    Auth.currentUser().then (user) =>
+      console.log user, @user
+      @showFU = @user.id != user.id
+
+    users.following(@user.id).then (res) =>
+      @fu = if res.data then 'Unfollow' else 'Follow'
 
     @user.following_count = users.following_count
     @user.followers_count = users.followers_count
@@ -44,3 +51,13 @@ angular.module 'nrTest'
       MONTHS[monthNo]
 
     @formatDate = formatDate(new Date(@user.created_at))
+
+    @toggleFollow = =>
+      if @fu == 'Unfollow'
+        @fu = 'Follow'
+        users.unfollow(@user.id)
+        @user.followers_count -= 1
+      else
+        @fu = 'Unfollow'
+        users.follow(@user.id)
+        @user.followers_count += 1
