@@ -17,22 +17,6 @@ angular.module 'nrTest'
         Auth.currentUser().then ->
           $state.go 'feed'
 
-    # $stateProvider.state 'login',
-    #   url: '/login'
-    #   templateUrl: 'auth/login.html'
-    #   controller: 'AuthCtrl'
-    #   onEnter: ($state, Auth) ->
-    #     Auth.currentUser().then ->
-    #       $state.go 'feed'
-    #
-    # $stateProvider.state 'register',
-    #   url: '/register'
-    #   templateUrl: 'auth/register.html'
-    #   controller: 'AuthCtrl'
-    #   onEnter: ($state, Auth) ->
-    #     Auth.currentUser().then ->
-    #       $state.go 'feed'
-
     $stateProvider.state 'article',
       url: '/articles/:article_id'
       templateUrl: 'articles/article.html'
@@ -50,6 +34,8 @@ angular.module 'nrTest'
       resolve:
         articlePromise: (articles, $stateParams) ->
           articles.getUserArticles($stateParams.user_id)
+        followResolve: (users, $stateParams) ->
+          users.getInfo($stateParams.user_id)
 
     $stateProvider.state 'feed',
       url: '/feed'
@@ -66,15 +52,6 @@ angular.module 'nrTest'
       onEnter: ($state, Auth) ->
         if not Auth.isAuthenticated()
           $state.go 'home'
-
-    $stateProvider.state 'following',
-      url: '/following'
-      templateUrl: 'followings/following.html'
-      controller: 'Following'
-      resolve:
-        followingPromise: (Auth, users) ->
-          Auth.currentUser().then (res) ->
-            users.getFollowed(res.id)
 
     # $urlRouterProvider.otherwise '/feed'
     $urlRouterProvider.otherwise '/'

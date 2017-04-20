@@ -21,6 +21,10 @@ class User < ApplicationRecord
     followed_users.includes articles: :comments
   end
 
+  def followers_with_articles_and_comments
+    followers.includes articles: :comments
+  end
+
   def following?(other_user)
     relationships.find_by followed_id: other_user.id
   end

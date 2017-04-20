@@ -78,7 +78,7 @@
       </a>
     </div>
     <div class="article-author">
-      <b>by</b> {{ article.user.email }}
+      <b>by</b> <a ng-href="/users/{{ article.user.id }}">{{ article.user.email }}</a>
     </div>
   </li>
 </ul>

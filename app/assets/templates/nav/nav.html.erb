@@ -8,7 +8,7 @@
     <div class="pull-right" ng-controller="NavCtrl as ctrl">
       <ul class="nav navbar-nav">
         <li ng-show="ctrl.signedIn()"><a href="/">Home</a></li>
-        <li ng-show="ctrl.signedIn()"><a href="/">{{ ctrl.user.email }}</a></li>
+        <li ng-show="ctrl.signedIn()"><a ng-href="/users/{{ ctrl.user.id }}">{{ ctrl.user.email }}</a></li>
         <li ng-show="ctrl.signedIn()"><a ng-click="ctrl.logout()" href="/">Log Out</a></li>
         <li ng-hide="ctrl.signedIn()"><a href='/'>Log in or Register</a></li>
       </ul>

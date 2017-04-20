@@ -1,0 +1,30 @@
+.user {
+  position: absolute;
+  left: 0;
+  top: 65px;
+
+  width: 280px;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+  background-color: white;
+  padding: 20px;
+
+  .user-email,
+  .user-followers {
+    padding-bottom: 10px;
+  }
+
+  .user-created {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 5px;
+  }
+
+  .user-followers {
+    padding-top: 5px;
+  }
+}
+
+.user-articles {
+  position: absolute;
+  left: 290px;
+}

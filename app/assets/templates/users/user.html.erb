@@ -1,0 +1,42 @@
+<div class="user">
+  <div class="user-email">
+    Email: {{ ctrl.user.email }}
+  </div>
+  <div class="user-created">
+    Registered at {{ ctrl.formatDate }}
+  </div>
+  <div class="user-followers">
+    Followers:
+    <a ng-href="/users/{{ ctrl.user.id }}/followers">
+      {{ ctrl.user.followers_count }}
+    </a>
+  </div>
+  <div class="user-following">
+    Following:
+    <a ng-href="/users/{{ ctrl.user.id }}/following">
+      {{ ctrl.user.following_count }}
+    </a>
+  </div>
+</div>
+<ul class="user-articles">
+  <li ng-repeat="article in ctrl.articles" class="article">
+    <div class="article-title">
+      <a ng-href="/articles/{{ article.id }}" class="article-link"
+         id="title{{ article.id }}">
+         {{ article.title }}
+       </a>
+    </div>
+    <div class="article-content" id="content{{ article.id }}">
+      {{ article.content }}
+    </div>
+    <div class="article-attachment" ng-if="ctrl.hasAttachment(article)">
+      <a ng-href="{{ ctrl.attachmentLink[article.id] }}"
+         ng-model="ctrl.attachmentLink[article.id]" target="_blank">
+        <i class="fa fa-paperclip"></i> Open Attachment
+      </a>
+    </div>
+    <div class="article-author">
+      <b>by</b> <a ng-href="/users/{{ article.user.id }}">{{ article.user.email }}</a>
+    </div>
+  </li>
+</ul>

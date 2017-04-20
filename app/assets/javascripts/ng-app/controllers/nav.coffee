@@ -3,11 +3,11 @@
 angular.module 'nrTest'
 .controller 'NavCtrl', class NavCtrl
 
-  constructor: ($scope, $rootScope, Auth) ->
+  constructor: ($scope, $state, Auth) ->
 
     @signedIn = Auth.isAuthenticated
     @logout = Auth.logout
-    
+
     Auth.currentUser().then (user) =>
       @user = user
 
@@ -19,3 +19,4 @@ angular.module 'nrTest'
 
     $scope.$on 'devise:logout', (e, user) =>
       @user = {}
+      $state.go 'home'

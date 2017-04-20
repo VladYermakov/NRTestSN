@@ -24,10 +24,11 @@ angular.module 'nrTest'
         $($("[name='#{commentHash}']").parent()).css('background', 'none')
       , 500
 
-      preventValue()
-
       $('.container').css 'width', '670'
       $('.container-navbar').css 'width', '670'
+
+      if @signedIn
+        preventValue()
 
     @focus = =>
       $(".create-comment .comment-content")[0].focus()
