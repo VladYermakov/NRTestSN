@@ -6,14 +6,24 @@ angular.module 'nrTest'
     articles: []
     article: {}
     userArticles: []
+    arr: []
+
+  page = 1
+  uPage = 1
 
   o.getAll = ->
-    $http.get(Routes.api_articles_path('json')).then (res) ->
-      angular.copy(res.data, o.articles)
+    $http.get(Routes.api_articles_path('json'), params: page: page).then (res) ->
+      angular.copy(res.data, o.arr)
+      o.articles.push.apply o.articles, o.arr
+      page += 1
+      res.data
 
   o.getUserArticles = (user_id) ->
-    $http.get(Routes.articles_api_user_path(user_id, 'json')).then (res) ->
-      angular.copy(res.data, o.userArticles)
+    $http.get(Routes.articles_api_user_path(user_id, 'json'), params: page: uPage).then (res) ->
+      angular.copy(res.data, o.arr)
+      o.userArticles.push.apply o.userArticles, o.arr
+      uPage += 1
+      res.data
 
   o.create = (article) ->
     $http.post(Routes.api_articles_path('json'), article).then (res) ->
@@ -39,6 +49,6 @@ angular.module 'nrTest'
 
   o.getAttachment = (attachment_id) ->
     $http.get(Routes.file_attachment_path(attachment_id, 'json')).then (res) ->
-      res
+      res.data
 
   o

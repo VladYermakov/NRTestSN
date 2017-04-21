@@ -9,6 +9,11 @@ angular.module 'nrTest'
     @signedIn = Auth.isAuthenticated()
     @article = articles.article
     @hasAttachment = @article.attachment_id isnt null
+    @alive = {}
+    @createOrUpdateComment = @createComment
+
+    for comment in @comments
+      @alive[comment.id] = true
 
     preventValue = =>
       $(".create-comment .comment-content")[0].innerHTML = '<br>'
@@ -29,6 +34,13 @@ angular.module 'nrTest'
 
       if @signedIn
         preventValue()
+
+    $(window).scroll =>
+      if $(window).scrollTop() + $(window).height() == $(document).height()
+        console.log 'reached bottom'
+        comments.getComments(@article.id).then (res) =>
+          for comment in res
+            @alive[comment.id] = true
 
     @focus = =>
       $(".create-comment .comment-content")[0].focus()
@@ -53,6 +65,52 @@ angular.module 'nrTest'
       @attachmentLink = '/files/' + @article.attachment_id
 
 
+    @deleteComment = (comment_id) =>
+      comments.destroy(comment_id).then (res) =>
+        @alive[comment_id] = false
+      , (res) =>
+        alert 'You are not able to delete this comment'
+
+    @showEditComment = (comment) =>
+      $('.create-comment .comment-content')[0].innerHTML = comment.content
+      @content = comment.content
+      @updatingComment = comment
+      @change()
+
+      $($('.create-comment .comment-content')[0]).focus()
+
+      $('.create-comment .comment-submit')[0].innerHTML = 'Update'
+      @createOrUpdateComment = @updateComment
+      @updating = true
+
+    @updateComment = =>
+      if @content
+        @content = @content.replace(/<br>/g, '\n').trim()
+
+      if ! @content or @content is ''
+        return
+
+      comments.update(@updatingComment.id, content: @content)
+
+      @updatingComment.content = @content
+
+      @content = '<br>'
+
+      preventValue()
+
+      $('.create-comment .comment-submit')[0].innerHTML = 'Post'
+      @createOrUpdateComment = @createComment
+      @updating = false
+
+    @abortUpdate = =>
+      @content = '<br>'
+
+      preventValue()
+
+      $('.create-comment .comment-submit')[0].innerHTML = 'Post'
+      @createOrUpdateComment = @createComment
+      @updating = false
+
     @createComment = =>
       if @content
         @content = @content.replace(/<br>/g, '\n').trim()
@@ -60,7 +118,8 @@ angular.module 'nrTest'
       if not @content or @content is ''
         return
 
-      comments.create(@article.id, content: @content)
+      comments.create(@article.id, content: @content).then (comment_id) =>
+        @alive[comment_id] = true
 
       @content = '<br>'
       preventValue()

@@ -6,6 +6,9 @@ angular.module 'nrTest'
     users: []
     feedArticles: []
     user: {}
+    arr: []
+
+  page = 1
 
   o.get = (user_id) ->
     $http.get(Routes.api_user_path(user_id, 'json')).then (res) ->
@@ -22,8 +25,10 @@ angular.module 'nrTest'
       res.data
 
   o.getFeed = ->
-    $http.get(Routes.feed_api_user_path('json')).then (res) ->
-      angular.copy(res.data, o.feedArticles)
+    $http.get(Routes.feed_api_user_path('json'), params: page: page).then (res) ->
+      angular.copy(res.data, o.arr)
+      o.feedArticles.push.apply o.feedArticles, o.arr
+      page += 1
       res.data
 
   o.getInfo = (user_id) ->

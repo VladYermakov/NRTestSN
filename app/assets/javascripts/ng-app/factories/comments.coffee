@@ -5,15 +5,23 @@ angular.module 'nrTest'
   o =
     comments: []
     allComments: []
+    arr: []
+
+  page = 1
+  aPage = 1
 
   o.getComments = (article_id) ->
-    $http.get(Routes.api_article_comments_path(article_id, 'json')).then (res) ->
-      angular.copy(res.data, o.comments)
+    $http.get(Routes.api_article_comments_path(article_id, 'json'), params: page: page).then (res) ->
+      angular.copy(res.data, o.arr)
+      o.comments.push.apply o.comments, o.arr
+      page += 1
       res.data
 
   o.getAll = () ->
-    $http.get(Routes.api_comments_path('json')).then (res) ->
-      angular.copy(res.data, o.allComments)
+    $http.get(Routes.api_comments_path('json'), params: page: aPage).then (res) ->
+      angular.copy(res.data, o.arr)
+      o.allComments.push.apply o.allComments, o.arr
+      aPage += 1
       res.data
 
   o.get = (id) ->

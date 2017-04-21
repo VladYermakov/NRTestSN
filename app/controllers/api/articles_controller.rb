@@ -2,11 +2,11 @@ class Api::ArticlesController < ApplicationController
   before_action :authenticate_user!, only: [:create, :update, :destroy]
 
   def index
-    respond_with Article.all
+    respond_with Article.paginate page: params[:page]
   end
 
   def user_articles
-    respond_with Article.where user_id: params[:id]
+    respond_with Article.where(user_id: params[:id]).paginate page: params[:page]
   end
 
   def show

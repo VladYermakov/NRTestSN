@@ -20,8 +20,8 @@
 <ul>
   <li class="article" ng-if="ctrl.signedIn">
     <div class="create-article">
-      <form ng-submit="ctrl.addArticle()">
-        <div class="article-title single-line" contenteditable="true"
+      <form ng-submit="ctrl.createOrUpdateArticle()">
+        <div class="article-title" contenteditable="true"
              ng-model="ctrl.title" ng-change="ctrl.change('title')">
         </div>
         <div class="title placeholder" ng-click="ctrl.focus('title')">Type article title here...</div>
@@ -47,6 +47,8 @@
              ng-model="ctrl.file" ng-change="ctrl.upload()"></i>
         </div>
         <button type="submit" class="btn btn-primary article-submit">Post</button>
+        <a class="btn btn-primary article-submit" ng-if="ctrl.updating"
+           ng-click="ctrl.abortUpdating()">Abort</a>
       </form>
     </div>
   </li>
@@ -56,15 +58,14 @@
         <li>
           <i class="fa fa-ellipsis-h fa-lg menu-dots"></i>
           <ul>
-            <li><a ng-click="ctrl.editArticle(article.id)">Edit Article</a></li>
+            <li><a ng-click="ctrl.showEditArticle(article)">Edit Article</a></li>
             <li><a ng-click="ctrl.deleteArticle(article.id)">Delete Article</a></li>
           </ul>
         </li>
       </ul>
     </div>
     <div class="article-title">
-      <a ng-href="/articles/{{ article.id }}" class="article-link"
-         id="title{{ article.id }}">
+      <a class="article-link" id="title{{ article.id }}">
          {{ article.title }}
        </a>
     </div>

@@ -5,7 +5,10 @@ class Api::AttachmentsController < ApplicationController
     attachment = AttachmentFile.find(params[:id])
     @link = attachment.source.expiring_url(10)
     @title = attachment.source_file_name
-    render "show", layout: false
+    respond_to do |format|
+      format.html { render "show", layout: false }
+      format.json { respond_with attachment }
+    end
   end
 
   def create

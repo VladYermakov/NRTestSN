@@ -14,6 +14,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 # gem 'therubyracer', platforms: :ruby
 
+gem 'will_paginate'
+
 gem 'cancancan'
 
 gem 'bower-rails'

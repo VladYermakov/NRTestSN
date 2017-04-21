@@ -3,9 +3,9 @@ class Api::CommentsController < ApplicationController
 
   def index
     comments = if params[:article_id]
-      Article.find(params[:article_id]).comments
+      Article.find(params[:article_id]).comments.paginate page: params[:page]
     else
-      Comment.all
+      Comment.paginate page: params[:page]
     end
     respond_with comments
   end

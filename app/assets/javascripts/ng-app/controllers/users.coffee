@@ -12,6 +12,10 @@ angular.module 'nrTest'
     @user = @articles[0].user
     @attachmentLink = {}
 
+    $(window).scroll =>
+      if $(window).scrollTop() + $(window).height() == $(document).height()
+        articles.getUserArticles(@user.id)
+
     Auth.currentUser().then (user) =>
       console.log user, @user
       @showFU = @user.id != user.id

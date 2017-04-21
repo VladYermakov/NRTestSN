@@ -11,11 +11,18 @@ angular.module 'nrTest'
       templateUrl: 'home.html'
       controller: 'HomeCtrl as ctrl'
       resolve:
+        signedOut: ($q, $state, Auth) ->
+          deferred = $q.defer()
+
+          Auth.currentUser().then (res) ->
+            deferred.reject()
+            $state.go 'feed'
+          , (res) ->
+            deferred.resolve()
+
+          deferred.promise
         articlePromise: (articles) ->
           articles.getAll()
-      onEnter: ($state, Auth) ->
-        Auth.currentUser().then ->
-          $state.go 'feed'
 
     $stateProvider.state 'article',
       url: '/articles/:article_id'
@@ -41,15 +48,19 @@ angular.module 'nrTest'
       url: '/feed'
       templateUrl: 'feeds/feed.html'
       controller: 'FeedCtrl as ctrl'
-      onEnter: ($state, Auth) ->
-        Auth.currentUser().then null, (res) ->
-          $state.go 'home'
       resolve:
-        feedPromise: (Auth, users) ->
+        signedIn: ($q, $state, Auth) ->
+          deferred = $q.defer()
+
           Auth.currentUser().then (res) ->
-            users.getFeed(res.id)
-          , (err) ->
-            console.log err
+            deferred.resolve()
+          , (res) ->
+            deferred.reject()
+            $state.go 'home'
+
+          deferred.promise
+        feedPromise: (users) ->
+          users.getFeed()
         articlePromise: (articles) ->
           articles.getAll()
         commentPromise: (comments) ->

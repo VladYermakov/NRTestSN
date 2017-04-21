@@ -28,6 +28,6 @@ class Api::UsersController < ApplicationController
   end
 
   def feed
-    respond_with current_user.followed_users_articles
+    respond_with current_user.followed_users_articles.paginate page: params[:page]
   end
 end

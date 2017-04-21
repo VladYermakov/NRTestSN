@@ -12,6 +12,10 @@ angular.module 'nrTest'
       $('.container').css 'width', '960'
       $('.container-navbar').css 'width', '960'
 
+    $(window).scroll ->
+      if $(window).scrollTop() + $(window).height() == $(document).height()
+        articles.getAll()
+
     attachLink = (article) =>
       if article.attachment_type is 'Article'
         @attachmentLink[article.id] = '/articles/' + article.attachment_id

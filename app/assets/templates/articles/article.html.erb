@@ -16,9 +16,20 @@
   </div>
   <div class="article-comments">
     <ul>
-      <li class="comment" ng-repeat="comment in ctrl.comments" >
+      <li class="comment" ng-repeat="comment in ctrl.comments" ng-if="ctrl.alive[comment.id]">
+        <div class="pull-right comment-actions" ng-if="ctrl.signedIn">
+          <ul class="menu">
+            <li>
+              <i class="fa fa-ellipsis-h fa-lg menu-dots"></i>
+              <ul>
+                <li><a ng-click="ctrl.showEditComment(comment)">Edit Comment</a></li>
+                <li><a ng-click="ctrl.deleteComment(comment.id)">Delete Comment</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
         <a name="comment{{comment.id}}"></a>
-        <div class="comment-content">
+        <div class="comment-content" id="content{{comment.id}}">
           {{comment.content}}
         </div>
         <div class="comment-author">
@@ -28,12 +39,14 @@
     </ul>
   </div>
   <div class="create-comment" ng-if="ctrl.signedIn">
-    <form ng-submit="ctrl.createComment()">
+    <form ng-submit="ctrl.createOrUpdateComment()">
       <div class="comment-content" ng-model="ctrl.content"
            contenteditable="true" ng-change="ctrl.change()">
       </div>
       <div class="content placeholder" ng-click="ctrl.focus()">Type your comment...</div>
       <button type="submit" class="btn btn-primary comment-submit">Post</button>
+      <a class="btn btn-primary comment-submit"
+         ng-click="ctrl.abortUpdate()" ng-if="ctrl.updating">Abort</a>
     </form>
   </div>
 </div>
