@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="nrTest">
   <head>
-    <title>NRTestSN</title>
+    <title>{{ $title }}</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <base href="/">
   </head>
-  <body ng-app="nrTest">
+  <body>
     <div ng-include="'nav/nav.html'"></div>
     <div class="container">
-      <ui-view></ui-view>
+      <div ng-include="'errors/404.html'" ng-show="$parent.notFound"></div>
+      <ui-view ng-hide="$parent.notFound"></ui-view>
     </div>
   </body>
 </html>

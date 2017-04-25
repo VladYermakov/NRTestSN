@@ -46,3 +46,112 @@ ul {
 
   display: none;
 }
+
+.not-found {
+  display: inline-block;
+
+  width: 100%;
+  height: 500px;
+
+  margin-top: 30px;
+
+  vertical-align: middle;
+
+  background: white;
+
+  border: 1px solid $border-color;
+  border-radius: 5px;
+
+  .rotate {
+    position: relative;
+    font-size: 20px;
+  }
+
+  .fourty-five-deg {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    top: 250px;
+    left: 400px;
+  }
+
+  .thirty-two-deg {
+    -webkit-transform: rotate(32deg);
+    -moz-transform: rotate(32deg);
+    -ms-transform: rotate(32deg);
+    -o-transform: rotate(32deg);
+    transform: rotate(32deg);
+    top: 520px;
+  }
+
+  .thirteen-deg {
+    -webkit-transform: rotate(13deg);
+    -moz-transform: rotate(13deg);
+    -ms-transform: rotate(13deg);
+    -o-transform: rotate(13deg);
+    transform: rotate(13deg);
+    top: 50px;
+  }
+
+  .minus-fifty-five-deg {
+    -webkit-transform: rotate(-55deg);
+    -moz-transform: rotate(-55deg);
+    -ms-transform: rotate(-55deg);
+    -o-transform: rotate(-55deg);
+    transform: rotate(-55deg);
+    top: 50px;
+    left: 350px;
+  }
+
+  .minus-twenty-two-deg {
+    -webkit-transform: rotate(-22deg);
+    -moz-transform: rotate(-22deg);
+    -ms-transform: rotate(-22deg);
+    -o-transform: rotate(-22deg);
+    transform: rotate(-22deg);
+    top: 50px;
+    left: 250px;
+  }
+
+  .zero-deg {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    top: 250px;
+    left: 200px;
+  }
+
+  .one-o-eight-deg {
+    -webkit-transform: rotate(108deg);
+    -moz-transform: rotate(108deg);
+    -ms-transform: rotate(108deg);
+    -o-transform: rotate(108deg);
+    transform: rotate(108deg);
+    top: 250px;
+    right: 250px;
+  }
+
+  .minus-one-thirty-five-deg {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    bottom: 230px;
+    right: 70px;
+  }
+
+  .ninety-deg {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+    top: 150px;
+    right: 20px;
+  }
+}
