@@ -13,14 +13,11 @@ angular.module 'nrTest'
     @alive = {}
     @currentUser = users.currentUser
 
-    console.log @article
-    console.log @currentUser
-
     for comment in @comments
       @alive[comment.id] = true
 
     preventValue = =>
-      $(".create-comment .comment-content")[0].innerHTML = '<br>'
+      $(".create-comment .comment-content")[0].innerHTML = ''
       @change()
 
     $(document).ready =>
@@ -35,9 +32,6 @@ angular.module 'nrTest'
 
       $('.container').css 'width', '670'
       $('.container-navbar').css 'width', '670'
-
-      if @signedIn
-        preventValue()
 
     $(window).scroll =>
       if $(window).scrollTop() + $(window).height() == $(document).height()
@@ -98,7 +92,7 @@ angular.module 'nrTest'
 
       @updatingComment.content = @content
 
-      @content = '<br>'
+      @content = ''
 
       preventValue()
 
@@ -107,7 +101,7 @@ angular.module 'nrTest'
       @updating = false
 
     @abortUpdate = =>
-      @content = '<br>'
+      @content = ''
 
       preventValue()
 
@@ -125,7 +119,7 @@ angular.module 'nrTest'
       comments.create(@article.id, content: @content).then (comment_id) =>
         @alive[comment_id] = true
 
-      @content = '<br>'
+      @content = ''
       preventValue()
 
     @createOrUpdateComment = @createComment
