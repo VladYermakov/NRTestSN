@@ -18,18 +18,25 @@
     <ul>
       <li class="comment" ng-repeat="comment in ctrl.comments" ng-if="ctrl.alive[comment.id]">
         <div class="pull-right comment-actions" ng-if="ctrl.signedIn">
-          <ul class="menu">
+          <ul class="menu" ng-if="comment.user_id == ctrl.currentUser.id">
             <li>
-              <i class="fa fa-ellipsis-h fa-lg menu-dots"></i>
+              <i class="fa fa-ellipsis-h fa-lg menu-dots"
+                 id="icon-{{ comment.id }}"></i>
               <ul>
-                <li><a ng-click="ctrl.showEditComment(comment)">Edit Comment</a></li>
-                <li><a ng-click="ctrl.deleteComment(comment.id)">Delete Comment</a></li>
+                <li><a ng-click="ctrl.showEditComment(comment)"
+                       id="edit-comment-{{ comment.id }}">
+                  Edit Comment
+                </a></li>
+                <li><a ng-click="ctrl.deleteComment(comment.id)"
+                       id="delete-comment-{{ comment.id }}">
+                  Delete Comment
+                </a></li>
               </ul>
             </li>
           </ul>
         </div>
         <a name="comment{{comment.id}}"></a>
-        <div class="comment-content" id="content{{comment.id}}">
+        <div class="comment-content" id="content-{{comment.id}}">
           {{comment.content}}
         </div>
         <div class="comment-author">
@@ -45,7 +52,7 @@
       </div>
       <div class="content placeholder" ng-click="ctrl.focus()">Type your comment...</div>
       <button type="submit" class="btn btn-primary comment-submit">Post</button>
-      <a class="btn btn-primary comment-submit"
+      <a class="btn btn-primary comment-submit" name="abort"
          ng-click="ctrl.abortUpdate()" ng-if="ctrl.updating">Abort</a>
     </form>
   </div>

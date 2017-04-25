@@ -3,14 +3,18 @@
 angular.module 'nrTest'
 .controller 'ArticlesCtrl', class ArticlesCtrl
 
-  constructor: ($location, $timeout, $anchorScroll, Auth, articles, comments) ->
+  constructor: ($location, $timeout, $anchorScroll,
+                Auth, articles, comments, users) ->
 
     @comments = comments.comments
     @signedIn = Auth.isAuthenticated()
     @article = articles.article
     @hasAttachment = @article.attachment_id isnt null
     @alive = {}
-    @createOrUpdateComment = @createComment
+    @currentUser = users.currentUser
+
+    console.log @article
+    console.log @currentUser
 
     for comment in @comments
       @alive[comment.id] = true
@@ -123,3 +127,5 @@ angular.module 'nrTest'
 
       @content = '<br>'
       preventValue()
+
+    @createOrUpdateComment = @createComment

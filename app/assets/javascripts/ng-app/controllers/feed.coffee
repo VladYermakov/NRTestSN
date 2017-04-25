@@ -3,7 +3,7 @@
 angular.module 'nrTest'
 .controller 'FeedCtrl', class FeedCtrl
 
-  constructor: (Auth, Upload, users, articles, comments) ->
+  constructor: ($scope, Auth, Upload, users, articles, comments) ->
 
     @feedArticles = users.feedArticles
     @articles = articles.articles
@@ -12,7 +12,7 @@ angular.module 'nrTest'
     @attachmentLink = {}
     @attachment = {}
     @alive = {}
-    @createOrUpdateArticle = @addArticle
+    @currentUser = users.currentUser
 
     $(document).ready =>
       $('.container').css 'width', '670'
@@ -27,7 +27,7 @@ angular.module 'nrTest'
           for article in res
             @alive[article.id] = true
 
-            attachLink(article)
+            attachLink(@attachmentLink, article)
 
     attachLink = (link, article) =>
       if article.attachment_type is 'Article'
@@ -59,8 +59,6 @@ angular.module 'nrTest'
     @deleteArticle = (article_id) =>
       articles.destroy(article_id).then (res) =>
         @alive[article_id] = false
-      , (res) ->
-        alert 'You are not able to delete this article'
 
     @showEditArticle = (article) =>
       $(".create-article .article-title")[0].innerHTML = article.title
@@ -182,14 +180,19 @@ angular.module 'nrTest'
       $('.create-article .article-submit')[0].innerHTML = 'Post'
 
     @upload = =>
+      console.log @file
       if not @file
         return
+
+      xcsrf = document.querySelector('meta[name="csrf-token"]')
+      if xcsrf
+        xcsrf = xcsrf.getAttribute 'content'
 
       options =
         url:    Routes.api_attachments_path('json')
         method: 'POST'
         headers:
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          'X-CSRF-Token': xcsrf
         file: @file
         data:
           source: @file
@@ -261,6 +264,7 @@ angular.module 'nrTest'
       $('body').css 'overflow-y', 'scroll'
 
     @addArticle = =>
+      console.log @title, @content
       if @title
         @title = @title.replace(/<br>/g, '').trim()
 
@@ -325,3 +329,5 @@ angular.module 'nrTest'
 
       @change('title')
       @change('content')
+
+    @createOrUpdateArticle = @addArticle

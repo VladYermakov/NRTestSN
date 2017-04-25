@@ -33,8 +33,10 @@ angular.module 'nrTest'
           comments.getComments($stateParams.article_id)
         articlePromise: (articles, $stateParams) ->
           articles.get($stateParams.article_id)
+        currentUserPromise: (users) ->
+          users.getCurrentUser()
 
-    $stateProvider.state 'users',
+    $stateProvider.state 'user',
       url: '/users/:user_id'
       templateUrl: 'users/user.html'
       controller: 'UsersCtrl as ctrl'
@@ -43,6 +45,8 @@ angular.module 'nrTest'
           articles.getUserArticles($stateParams.user_id)
         followResolve: (users, $stateParams) ->
           users.getInfo($stateParams.user_id)
+        userResolve: (users, $stateParams) ->
+          users.get($stateParams.user_id)
 
     $stateProvider.state 'feed',
       url: '/feed'
@@ -65,6 +69,8 @@ angular.module 'nrTest'
           articles.getAll()
         commentPromise: (comments) ->
           comments.getAll()
+        currentUserPromise: (users) ->
+          users.getCurrentUser()
 
     $stateProvider.state 'following',
       url: '/users/:user_id/following'

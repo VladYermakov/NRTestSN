@@ -20,7 +20,7 @@
 <ul>
   <li class="article" ng-if="ctrl.signedIn">
     <div class="create-article">
-      <form ng-submit="ctrl.createOrUpdateArticle()">
+      <form ng-submit="ctrl.createOrUpdateArticle()" multipart="true">
         <div class="article-title" contenteditable="true"
              ng-model="ctrl.title" ng-change="ctrl.change('title')">
         </div>
@@ -30,7 +30,7 @@
         </div>
         <div class="content placeholder" ng-click="ctrl.focus('content')">Type article content here...</div>
         <div class="article-attachment" ng-if="ctrl.attachment.link">
-          <a ng-href="{{ ctrl.attachment.link }}"
+          <a ng-href="{{ ctrl.attachment.link }}" id="attachment-link"
              ng-model="ctrl.attachment.link" target="_blank">
             <i class="fa fa-{{ ctrl.attachment.icon }}"></i>
             <span class="attachment-name">{{ ctrl.attachment.name }}</span>
@@ -43,36 +43,43 @@
         <div class="article-attachments">
           <i class="fa fa-lg fa-pencil" ng-click="ctrl.showChoose('Article')"></i>
           <i class="fa fa-lg fa-comment" ng-click="ctrl.showChoose('Comment')"></i>
-          <i class="fa fa-lg fa-file" ngf-select
-             ng-model="ctrl.file" ng-change="ctrl.upload()"></i>
+          <i class="fa fa-lg fa-file" ngf-select ng-change="ctrl.upload()"
+             name="attachment-file" ng-model="ctrl.file"></i>
         </div>
         <button type="submit" class="btn btn-primary article-submit">Post</button>
         <a class="btn btn-primary article-submit" ng-if="ctrl.updating"
-           ng-click="ctrl.abortUpdating()">Abort</a>
+           ng-click="ctrl.abortUpdating()" name="abort">Abort</a>
       </form>
     </div>
   </li>
   <li ng-repeat="article in ctrl.feedArticles" class="article" ng-if="ctrl.alive[article.id]">
     <div class="pull-right" ng-if="ctrl.signedIn">
-      <ul class="menu">
+      <ul class="menu" ng-if="article.user_id == ctrl.currentUser.id">
         <li>
-          <i class="fa fa-ellipsis-h fa-lg menu-dots"></i>
+          <i class="fa fa-ellipsis-h fa-lg menu-dots" id="icon-{{ article.id }}"></i>
           <ul>
-            <li><a ng-click="ctrl.showEditArticle(article)">Edit Article</a></li>
-            <li><a ng-click="ctrl.deleteArticle(article.id)">Delete Article</a></li>
+            <li><a ng-click="ctrl.showEditArticle(article)"
+                   id="edit-article-{{ article.id }}">
+              Edit Article
+            </a></li>
+            <li><a ng-click="ctrl.deleteArticle(article.id)"
+                   id="delete-article-{{ article.id }}">
+              Delete Article
+            </a></li>
           </ul>
         </li>
       </ul>
     </div>
     <div class="article-title">
-      <a class="article-link" id="title{{ article.id }}">
+      <a class="article-link" id="title-{{ article.id }}">
          {{ article.title }}
        </a>
     </div>
-    <div class="article-content" id="content{{ article.id }}">
+    <div class="article-content" id="content-{{ article.id }}">
       {{ article.content }}
     </div>
-    <div class="article-attachment" ng-if="ctrl.hasAttachment(article)">
+    <div class="article-attachment" ng-if="ctrl.hasAttachment(article)"
+         id="attachment-{{ article.id }}">
       <a ng-href="{{ ctrl.attachmentLink[article.id] }}"
          ng-model="ctrl.attachmentLink[article.id]" target="_blank">
         <i class="fa fa-paperclip"></i> Open Attachment

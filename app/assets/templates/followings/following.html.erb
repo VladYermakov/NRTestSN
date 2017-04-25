@@ -3,12 +3,15 @@
       {{ ctrl.user.email }}
     </a>
   </li>
-  <li class="user" ng-if="ctrl.users.length == 0">No {{ ctrl.fol }}</li>
-  <li ng-repeat="user in ctrl.users" class="user">
+  <li class="user" id="no-users" ng-if="ctrl.users.length == 0">No {{ ctrl.fol }}</li>
+  <li ng-repeat="user in ctrl.users" class="user" id="user-{{user.id}}">
     <div class="user-email">
       <a ng-href="/users/{{ user.id }}">
         {{ user.email }}
       </a>
+    </div>
+    <div class="article no-article" ng-if="user.articles.length == 0">
+      No Articles
     </div>
     <div class="article" ng-if="user.articles[0]">
       <div class="article-title">

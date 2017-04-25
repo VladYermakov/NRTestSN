@@ -37,6 +37,7 @@ gem 'font-awesome-rails'
 
 group :development, :test do
   gem 'byebug', platform: :mri
+  gem 'simplecov', :require => false
 end
 
 group :development do
@@ -47,7 +48,15 @@ end
 group :test do
   gem 'rspec-rails'
   gem 'rspec-its'
+
   gem 'factory_girl_rails'
+
+  gem 'capybara'
+  gem 'capybara-webkit'
+  #gem 'poltergeist'
+  gem 'capybara-angular'
+
+  gem 'database_cleaner'
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

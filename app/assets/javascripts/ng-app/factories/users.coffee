@@ -1,18 +1,20 @@
 'use strict'
 
 angular.module 'nrTest'
-.factory 'users', ($http) ->
+.factory 'users', ($http, Auth) ->
   o =
     users: []
     feedArticles: []
     user: {}
     arr: []
+    currentUser: {}
 
   page = 1
 
   o.get = (user_id) ->
     $http.get(Routes.api_user_path(user_id, 'json')).then (res) ->
       o.user = res.data
+      res.data
 
   o.getFollowed = (user_id) ->
     $http.get(Routes.following_api_user_path(user_id, 'json')).then (res) ->
@@ -44,5 +46,10 @@ angular.module 'nrTest'
 
   o.following = (other_id) ->
     $http.get(Routes.api_relationships_path('json'), params: followed_id: other_id)
+
+  o.getCurrentUser = ->
+    Auth.currentUser().then (user) ->
+      o.currentUser = user
+      user
 
   o

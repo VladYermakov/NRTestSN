@@ -9,7 +9,7 @@ angular.module 'nrTest'
               'August', 'September', 'October', 'November', 'December']
 
     @articles = articles.userArticles
-    @user = @articles[0].user
+    @user = users.user
     @attachmentLink = {}
 
     $(window).scroll =>
@@ -17,7 +17,6 @@ angular.module 'nrTest'
         articles.getUserArticles(@user.id)
 
     Auth.currentUser().then (user) =>
-      console.log user, @user
       @showFU = @user.id != user.id
 
     users.following(@user.id).then (res) =>
@@ -48,7 +47,6 @@ angular.module 'nrTest'
       article.attachment_id isnt null
 
     formatDate = (date) ->
-      console.log date
       "#{date.getDate()} of #{getMonthName(date.getMonth())} #{date.getFullYear()}"
 
     getMonthName = (monthNo) ->
