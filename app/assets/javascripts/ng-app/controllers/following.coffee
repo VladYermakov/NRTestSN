@@ -17,5 +17,6 @@ angular.module 'nrTest'
       ['Followers of ', 'followers']
 
     $(document).ready ->
-      $('.container').css 'border', '670'
-      $('.container-navbar').css 'border', '670'
+      console.log 'following ready'
+      $('.container').css 'width', '670'
+      $('.container-navbar').css 'width', '670'
